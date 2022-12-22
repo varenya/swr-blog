@@ -25,9 +25,7 @@ type WeatherInfo = z.infer<typeof weatherInfoResponse>;
 type BasicWeatherInfo = z.infer<typeof basicWeatherInfo>;
 
 async function getWeatherInfo(location: string): Promise<BasicWeatherInfo> {
-  const weatherResponse = await fetch(
-    `https://mockweatherapi.com/en/${location}`
-  );
+  const weatherResponse = await fetch(`/api/weather/${location}`);
   if (!weatherResponse.ok) {
     throw new Error(weatherResponse.statusText);
   }
