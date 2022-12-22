@@ -1,4 +1,4 @@
-import { BasicWeatherInfo } from "../weather-client";
+import { BasicWeatherInfo } from "../../services/weather-client";
 import { useWeather } from "./useWeather";
 import React from "react";
 import { WeatherErrror } from "./WeatherError";

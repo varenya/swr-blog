@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { WeatherInfo } from "../src/weather-client";
+import { WeatherInfo } from "../src/services/weather-client";
 
 export const handlers = [
   rest.get<WeatherInfo>(

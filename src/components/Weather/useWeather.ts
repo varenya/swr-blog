@@ -1,7 +1,7 @@
 import useSWR from "swr";
-import { getWeatherInfo } from "../weather-client";
+import { getWeatherInfo } from "../../services/weather-client";
 
-import type { BasicWeatherInfo } from "../weather-client";
+import type { BasicWeatherInfo } from "../../services/weather-client";
 
 type LoadData<DataType> =
   | { status: "success"; data: DataType }

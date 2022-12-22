@@ -1,7 +1,13 @@
 import Head from "next/head";
-import { WeatherLoader } from "../src/components/Weather";
+import { useState } from "react";
+import { CityDropDown } from "../src/components/Menu/Menu";
+import { WeatherLoader } from "../src/components/Weather/Weather";
 
 export default function Home() {
+  const [city, selectedCity] = useState("london");
+  function handleCity(city: string) {
+    selectedCity(city);
+  }
   return (
     <>
       <Head>
@@ -16,8 +22,9 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 flex justify-center items-center">
-        <WeatherLoader location="istanbul" />
+      <main className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 flex flex-col gap-8 justify-center items-center">
+        <CityDropDown currentCity={city} handleCity={handleCity} />
+        <WeatherLoader location={city} />
       </main>
     </>
   );
