@@ -24,8 +24,16 @@ const weatherInfoResponse = z.discriminatedUnion("available", [
 type WeatherInfo = z.infer<typeof weatherInfoResponse>;
 type BasicWeatherInfo = z.infer<typeof basicWeatherInfo>;
 
+function getWeatherUrl(location: string) {
+  if (typeof window !== "undefined") {
+    return `/api/weather/${location}`;
+  }
+  return `http://localhost:3000/api/weather/${location}`;
+}
+
 async function getWeatherInfo(location: string): Promise<BasicWeatherInfo> {
-  const weatherResponse = await fetch(`/api/weather/${location}`);
+  const url = getWeatherUrl(location);
+  const weatherResponse = await fetch(url);
   if (!weatherResponse.ok) {
     throw new Error(weatherResponse.statusText);
   }
@@ -39,6 +47,6 @@ async function getWeatherInfo(location: string): Promise<BasicWeatherInfo> {
   };
 }
 
-export { getWeatherInfo };
+export { getWeatherInfo, getWeatherUrl };
 
 export type { WeatherInfo, BasicWeatherInfo };

@@ -9,11 +9,11 @@ type LoadData<DataType> =
   | { status: "error"; error: Error };
 
 function useWeather(location: string): LoadData<BasicWeatherInfo> {
-  const { data, error, isLoading } = useSWR(location, getWeatherInfo);
+  const { data, error } = useSWR(location, getWeatherInfo);
   if (error) {
     return { status: "error", error };
   }
-  if (isLoading || !data) {
+  if (!data) {
     return { status: "loading" };
   }
   return { status: "success", data };

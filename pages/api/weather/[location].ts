@@ -12,6 +12,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (location === "istanbul") {
       return res.status(500).json({ available: 0 });
     }
+    if (location === "delhi") {
+      await delay(2000);
+      return res
+        .status(200)
+        .json({ available: 1, humidity: 10, temperature: 30 });
+    }
     if (location === "london") {
       await delay(2000);
       return res
