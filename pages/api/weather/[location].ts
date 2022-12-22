@@ -9,6 +9,9 @@ function delay(time: number) {
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const location = req.query.location;
+    if (location === "istanbul") {
+      return res.status(500).json({ available: 0 });
+    }
     if (location === "london") {
       await delay(2000);
       return res

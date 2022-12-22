@@ -1,6 +1,7 @@
 import { BasicWeatherInfo } from "../weather-client";
 import { useWeather } from "./useWeather";
 import React from "react";
+import { WeatherErrror } from "./WeatherError";
 
 type WeatherProps = {
   location: string;
@@ -94,7 +95,7 @@ function WeatherLoader({ location }: WeatherProps) {
   const weatherData = useWeather(location);
   switch (weatherData.status) {
     case "error":
-      return <h1>Error</h1>;
+      return <WeatherErrror />;
     case "loading":
       return <WeatherContentLoader />;
     case "success":

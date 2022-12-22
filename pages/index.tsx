@@ -17,7 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 flex justify-center items-center">
-        <WeatherLoader location="london" />
+        <WeatherLoader location="istanbul" />
       </main>
     </>
   );
