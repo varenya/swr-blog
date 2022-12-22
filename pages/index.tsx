@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { ClientOnly } from "../src/components/ClientOnly";
 import { Weather } from "../src/components/Weather";
 
 export default function Home() {
@@ -12,7 +13,9 @@ export default function Home() {
       </Head>
       <main>
         <h1>Hello World</h1>
-        <Weather location="london" />
+        <ClientOnly>
+          <Weather location="london" />
+        </ClientOnly>
       </main>
     </>
   );
