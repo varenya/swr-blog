@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 import { getWeatherInfo } from "../../services/weather-client";
 
 import type { BasicWeatherInfo } from "../../services/weather-client";
@@ -9,7 +10,7 @@ type LoadData<DataType> =
   | { status: "error"; error: Error };
 
 function useWeather(location: string): LoadData<BasicWeatherInfo> {
-  const { data, error } = useSWR(location, getWeatherInfo);
+  const { data, error } = useSWRImmutable(location, getWeatherInfo);
   if (error) {
     return { status: "error", error };
   }

@@ -25,10 +25,7 @@ type WeatherInfo = z.infer<typeof weatherInfoResponse>;
 type BasicWeatherInfo = z.infer<typeof basicWeatherInfo>;
 
 function getWeatherUrl(location: string) {
-  if (typeof window !== "undefined") {
-    return `/api/weather/${location}`;
-  }
-  return `http://localhost:3000/api/weather/${location}`;
+  return `https://weatherapi/en/${location}`;
 }
 
 async function getWeatherInfo(location: string): Promise<BasicWeatherInfo> {
