@@ -1,9 +1,22 @@
 import Head from "next/head";
+
+import { GetServerSidePropsContext } from "next";
 import { useState } from "react";
 import { CityDropDown } from "../src/components/Menu/Menu";
 import { WeatherLoader } from "../src/components/Weather/Weather";
+import { SWRConfig } from "swr";
+import {
+  BasicWeatherInfo,
+  getWeatherInfo,
+} from "../src/services/weather-client";
 
-export default function Home() {
+type WeatherProps = {
+  fallback: {
+    london: BasicWeatherInfo;
+  };
+};
+
+export default function Home(props: WeatherProps) {
   const [city, selectedCity] = useState("london");
   function handleCity(city: string) {
     selectedCity(city);
@@ -17,9 +30,22 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 flex flex-col gap-8 justify-center items-center">
-        <CityDropDown currentCity={city} handleCity={handleCity} />
-        <WeatherLoader location={city} />
+        <SWRConfig value={{ fallback: props.fallback }}>
+          <CityDropDown currentCity={city} handleCity={handleCity} />
+          <WeatherLoader location={city} />
+        </SWRConfig>
       </main>
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const weatherResponse = await getWeatherInfo("london");
+  return {
+    props: {
+      fallback: {
+        london: weatherResponse,
+      },
+    },
+  };
 }

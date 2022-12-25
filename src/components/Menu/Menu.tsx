@@ -36,27 +36,13 @@ function CityDropDown(props: CityProps) {
               {({ active }) => (
                 <a
                   href="#"
-                  onClick={() => props.handleCity("istanbul")}
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  Istanbul (Error)
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
                   onClick={() => props.handleCity("london")}
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm"
                   )}
                 >
-                  London
+                  London (Pre Loaded Server Side)
                 </a>
               )}
             </Menu.Item>
@@ -70,7 +56,35 @@ function CityDropDown(props: CityProps) {
                     "block px-4 py-2 text-sm"
                   )}
                 >
-                  Delhi (Unavailable)
+                  Delhi (Loading..)
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  onClick={() => props.handleCity("mumbai")}
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm"
+                  )}
+                >
+                  Mumbai (Unavailable)
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  onClick={() => props.handleCity("istanbul")}
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm"
+                  )}
+                >
+                  Istanbul (Error)
                 </a>
               )}
             </Menu.Item>
