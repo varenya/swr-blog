@@ -9,15 +9,11 @@ type LoadData<DataType> =
   | { status: "loading" }
   | { status: "error"; error: Error };
 
-function useWeather(location: string): LoadData<BasicWeatherInfo> {
-  const { data, error } = useSWRImmutable(location, getWeatherInfo);
-  if (error) {
-    return { status: "error", error };
-  }
-  if (!data) {
-    return { status: "loading" };
-  }
-  return { status: "success", data };
+function useWeather(location: string) {
+  const { data, mutate } = useSWRImmutable(location, getWeatherInfo, {
+    suspense: true,
+  });
+  return { data: data!, mutate };
 }
 
 export { useWeather };

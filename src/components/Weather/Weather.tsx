@@ -1,10 +1,11 @@
-import { BasicWeatherInfo } from "../../services/weather-client";
+import { ErrorBoundary } from "react-error-boundary";
 import { useWeather } from "./useWeather";
-import React from "react";
-import { WeatherErrror } from "./WeatherError";
+import React, { Suspense } from "react";
+import { WeatherError } from "./WeatherError";
 
 type WeatherProps = {
   location: string;
+  retryLocation: (key: string) => void;
 };
 
 function WeatherContentLoader() {
@@ -49,7 +50,8 @@ function WeatherContentLoader() {
   );
 }
 
-function Weather({ weatherInfo }: { weatherInfo: BasicWeatherInfo }) {
+function Weather({ location }: { location: string }) {
+  const { data: weatherInfo } = useWeather(location);
   return (
     <div className="bg-gray-100 w-1/4 mx-auto rounded-lg p-8">
       <header className="flex justify-center items-center gap-2">
@@ -91,19 +93,18 @@ function Weather({ weatherInfo }: { weatherInfo: BasicWeatherInfo }) {
   );
 }
 
-function WeatherLoader({ location }: WeatherProps) {
-  const weatherData = useWeather(location);
-  switch (weatherData.status) {
-    case "error":
-      return <WeatherErrror />;
-    case "loading":
-      return <WeatherContentLoader />;
-    case "success":
-      return <Weather weatherInfo={weatherData.data} />;
-    default:
-      const _exceptionCase: never = weatherData;
-      return _exceptionCase;
-  }
+function WeatherLoader({ location, retryLocation }: WeatherProps) {
+  return (
+    <ErrorBoundary
+      FallbackComponent={WeatherError}
+      resetKeys={[location]}
+      onReset={() => retryLocation(location)}
+    >
+      <Suspense fallback={<WeatherContentLoader />}>
+        <Weather location={location} />
+      </Suspense>
+    </ErrorBoundary>
+  );
 }
 
 export { WeatherLoader };

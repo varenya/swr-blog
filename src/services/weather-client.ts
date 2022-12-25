@@ -45,10 +45,10 @@ async function mockApiResponse(location: string): Promise<Response> {
         JSON.stringify({ available: 1, humidity: 10, temperature: 30 })
       );
     case "istanbul":
-      return new Response(
-        JSON.stringify({ available: 1, humidity: 10, temperature: 30 }),
-        { status: 404, statusText: "Weather info not available" }
-      );
+      return new Response(JSON.stringify({ available: 0 }), {
+        status: 502,
+        statusText: "Server timed out",
+      });
     case "mumbai":
       return new Response(JSON.stringify({ available: 0 }));
     default:
@@ -63,7 +63,7 @@ async function getWeatherInfo(location: string): Promise<BasicWeatherInfo> {
   }
   const weatherInfo = weatherInfoResponse.parse(await weatherResponse.json());
   if (weatherInfo.available === 0) {
-    throw new Error("Weather information not available!");
+    throw new Error("Weather information not available for this location");
   }
   return {
     humidity: weatherInfo.humidity,
