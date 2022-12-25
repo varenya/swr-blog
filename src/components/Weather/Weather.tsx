@@ -51,7 +51,7 @@ function WeatherContentLoader() {
 }
 
 function Weather({ location }: { location: string }) {
-  const { data: weatherInfo } = useWeather(location);
+  const weatherInfo = useWeather(location);
   return (
     <div className="bg-gray-100 w-1/4 mx-auto rounded-lg p-8">
       <header className="flex justify-center items-center gap-2">
