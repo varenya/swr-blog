@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import { GetServerSidePropsContext } from "next";
 import { useState } from "react";
 import { CityDropDown } from "../src/components/Menu/Menu";
 import { WeatherLoader } from "../src/components/Weather/Weather";
@@ -8,7 +8,6 @@ import { SWRConfig } from "swr";
 import {
   BasicWeatherInfo,
   getWeatherInfo,
-  getWeatherUrl,
 } from "../src/services/weather-client";
 
 type WeatherProps = {
