@@ -42,7 +42,7 @@ function CityDropDown(props: CityProps) {
                     "block px-4 py-2 text-sm"
                   )}
                 >
-                  London (Pre Loaded)
+                  London (Pre Loaded Server Side)
                 </a>
               )}
             </Menu.Item>
