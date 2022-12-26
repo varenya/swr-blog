@@ -28,11 +28,13 @@ type BasicWeatherInfo = z.infer<typeof basicWeatherInfo>;
 async function getWeatherInfo(location: string): Promise<BasicWeatherInfo> {
   const weatherResponse = await mockApiResponse(location);
   if (!weatherResponse.ok) {
-    throw new Error(weatherResponse.statusText);
+    throw new Error(weatherResponse.statusText, { cause: "network" });
   }
   const weatherInfo = weatherInfoResponse.parse(await weatherResponse.json());
   if (weatherInfo.available === 0) {
-    throw new Error("Weather information not available for this location");
+    throw new Error("Weather information not available for this location", {
+      cause: "unavailble",
+    });
   }
   return {
     humidity: weatherInfo.humidity,
