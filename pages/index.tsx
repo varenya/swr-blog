@@ -32,7 +32,7 @@ export default function Home(props: WeatherProps) {
       <main className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 flex flex-col gap-8 justify-center items-center">
         <SWRConfig value={{ fallback: props.fallback }}>
           <CityDropDown currentCity={city} handleCity={handleCity} />
-          <WeatherLoader location={city} />
+          <WeatherLoader location={city} retryLocation={selectedCity} />
         </SWRConfig>
       </main>
     </>
