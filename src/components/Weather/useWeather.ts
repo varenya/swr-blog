@@ -1,11 +1,13 @@
-import useSWRImmutable from "swr/immutable";
 import { getWeatherInfo } from "../../services/weather-client";
 
-import type { BasicWeatherInfo } from "../../services/weather-client";
+import { useQuery } from "@tanstack/react-query";
 
 function useWeather(location: string) {
-  const { data } = useSWRImmutable<BasicWeatherInfo>(location, getWeatherInfo, {
+  const { data } = useQuery({
+    queryKey: [location],
+    queryFn: async () => await getWeatherInfo(location),
     suspense: true,
+    retry: false,
   });
   return data!;
 }

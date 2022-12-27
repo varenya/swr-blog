@@ -1,11 +1,11 @@
+import React, { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useWeather } from "./useWeather";
-import React, { Suspense } from "react";
 import { WeatherError } from "./WeatherError";
+import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 
 type WeatherProps = {
   location: string;
-  retryLocation: (key: string) => void;
 };
 
 function WeatherContentLoader() {
@@ -93,12 +93,13 @@ function Weather({ location }: { location: string }) {
   );
 }
 
-function WeatherLoader({ location, retryLocation }: WeatherProps) {
+function WeatherLoader({ location }: WeatherProps) {
+  const { reset } = useQueryErrorResetBoundary();
   return (
     <ErrorBoundary
       FallbackComponent={WeatherError}
       resetKeys={[location]}
-      onReset={() => retryLocation(location)}
+      onReset={reset}
     >
       <Suspense fallback={<WeatherContentLoader />}>
         <Weather location={location} />

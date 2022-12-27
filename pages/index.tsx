@@ -1,10 +1,9 @@
 import Head from "next/head";
-
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { GetServerSidePropsContext } from "next";
 import { useState } from "react";
 import { CityDropDown } from "../src/components/Menu/Menu";
 import { WeatherLoader } from "../src/components/Weather/Weather";
-import { SWRConfig } from "swr";
 import {
   BasicWeatherInfo,
   getWeatherInfo,
@@ -30,22 +29,23 @@ export default function Home(props: WeatherProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 flex flex-col gap-8 justify-center items-center">
-        <SWRConfig value={{ fallback: props.fallback }}>
-          <CityDropDown currentCity={city} handleCity={handleCity} />
-          <WeatherLoader location={city} retryLocation={selectedCity} />
-        </SWRConfig>
+        <CityDropDown currentCity={city} handleCity={handleCity} />
+        <WeatherLoader location={city} />
       </main>
     </>
   );
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const weatherResponse = await getWeatherInfo("london");
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(
+    ["london"],
+    async () => await getWeatherInfo("london")
+  );
   return {
     props: {
-      fallback: {
-        london: weatherResponse,
-      },
+      dehydrateState: dehydrate(queryClient),
     },
   };
 }

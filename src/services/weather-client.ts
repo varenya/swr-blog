@@ -33,7 +33,7 @@ async function getWeatherInfo(location: string): Promise<BasicWeatherInfo> {
   const weatherInfo = weatherInfoResponse.parse(await weatherResponse.json());
   if (weatherInfo.available === 0) {
     throw new Error("Weather information not available for this location", {
-      cause: "unavailble",
+      cause: "unavailable",
     });
   }
   return {

@@ -3,6 +3,7 @@ function delay(time: number) {
     setTimeout(resolve, time);
   });
 }
+let firstAttempt = true;
 async function mockApiResponse(location: string): Promise<Response> {
   switch (location) {
     // positive case
@@ -21,10 +22,17 @@ async function mockApiResponse(location: string): Promise<Response> {
       );
     // network error case
     case "istanbul":
-      return new Response(JSON.stringify({ available: 0 }), {
-        status: 502,
-        statusText: "Server timed out",
-      });
+      if (firstAttempt) {
+        firstAttempt = false;
+        return new Response(JSON.stringify({ available: 0 }), {
+          status: 502,
+          statusText: "Server timed out",
+        });
+      } else {
+        return new Response(
+          JSON.stringify({ available: 1, humidity: 20, temperature: 23 })
+        );
+      }
     // data unavailable case
     case "mumbai":
       return new Response(JSON.stringify({ available: 0 }));
