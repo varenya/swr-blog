@@ -1,5 +1,9 @@
-import { BasicWeatherInfo } from "../../services/weather-client";
+import {
+  BasicWeatherInfo,
+  getWeatherInfo,
+} from "../../services/weather-client";
 import { useWeather } from "./useWeather";
+import { preload } from "swr";
 import React from "react";
 import { WeatherErrror } from "./WeatherError";
 
@@ -89,6 +93,11 @@ function Weather({ weatherInfo }: { weatherInfo: BasicWeatherInfo }) {
       </dl>
     </div>
   );
+}
+
+// prefetch on client
+if (typeof window !== "undefined") {
+  preload("kolkata", getWeatherInfo);
 }
 
 function WeatherLoader({ location }: WeatherProps) {

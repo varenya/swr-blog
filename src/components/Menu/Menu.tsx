@@ -64,6 +64,20 @@ function CityDropDown(props: CityProps) {
               {({ active }) => (
                 <a
                   href="#"
+                  onClick={() => props.handleCity("kolkata")}
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm"
+                  )}
+                >
+                  Kolkata (Prefetch on Client)
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
                   onClick={() => props.handleCity("delhi")}
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
