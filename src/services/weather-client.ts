@@ -29,6 +29,7 @@ async function getWeatherInfo(location: string): Promise<BasicWeatherInfo> {
   if (!weatherResponse.ok) {
     throw new Error(weatherResponse.statusText);
   }
+  // throws error if schema validation fails (ZodError)
   const weatherInfo = weatherInfoResponse.parse(await weatherResponse.json());
   if (weatherInfo.available === 0) {
     throw new Error("Weather information not available!");
